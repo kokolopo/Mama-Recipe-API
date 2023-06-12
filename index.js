@@ -8,6 +8,7 @@ dotEnv.config();
 
 const port = 3000;
 
+app.use(cors({ credentials: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(router);
