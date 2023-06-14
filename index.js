@@ -1,6 +1,7 @@
 const express = require("express");
 const router = require("./src/routes");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const app = express();
 const dotEnv = require("dotenv");
 const cookieParser = require("cookie-parser");
