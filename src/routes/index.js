@@ -25,6 +25,7 @@ router.post(
   recipesController.addRecipe
 );
 router.get("/recipes", verifyToken, recipesController.listRecipes);
+router.get("/recipes/:recipe_id", verifyToken, recipesController.getRecipeById);
 router.put(
   "/recipes/:recipe_id",
   uploadImages.single("image"),

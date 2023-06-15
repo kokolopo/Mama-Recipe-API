@@ -17,6 +17,7 @@ const recipesController = {
     try {
       const image_url = generateRandomString(10);
       uploadFile(req.file.path, image_url);
+
       console.log(image_url);
 
       const presignedUrl = await MinioClient.presignedGetObject(
@@ -149,6 +150,24 @@ const recipesController = {
       });
 
       res.status(200).json({ message: "berhasil dihapus" });
+    } catch (error) {
+      res.status(500).json({
+        message: "Something went wrong",
+        error,
+      });
+    } finally {
+      await prisma.$disconnect();
+    }
+  },
+
+  getRecipeById: async (req, res) => {
+    const { recipe_id } = req.params;
+    try {
+      const data = await prisma.recipes.findFirst({
+        where: { id: parseInt(recipe_id) },
+      });
+
+      res.status(200).json({ message: `Recipe with id: ${recipe_id}`, data });
     } catch (error) {
       res.status(500).json({
         message: "Something went wrong",
