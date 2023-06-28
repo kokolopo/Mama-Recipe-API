@@ -48,14 +48,16 @@ const recipesController = {
 
   listRecipes: async (req, res) => {
     try {
-      let { page = 1, limit = 3, sort = "desc" } = req.query;
+      let { page = 1, limit = 3, sort = "desc", title } = req.query;
       let skip = (page - 1) * limit;
 
       const recipes = await prisma.recipes.findMany({
         orderBy: [{ id: sort }],
         take: parseInt(limit),
         skip: skip,
+        where: { title: { contains: title } },
       });
+
       // total data
       const resultCount = await prisma.recipes.count();
       // total page
